@@ -1,20 +1,20 @@
 Extra Topics :-
 ----------------
-1) Deleget & Event                                          Done
-2) Async Programming  (Using Wizard into Web API)           Done
-3) Entity Framework Core Advanced  & RelationShip           Done                     
+1) Deleget & Event                                          Done      
+2) Async Programming  (Using Wizard into Web API)           Done    
+3) Entity Framework Core Advanced  & RelationShip           Done                         
 
 Session 1:-
 ***********
-Introduction to .NET Core and Web API                       Done 
-Overview of .NET Core and its advantages                    Done 
-Understanding web APIs and RESTful principles               Done 
-Setting up the development environment                      Done 
-Creating your first .NET Core Web API project               Done 
+Introduction to .NET Core and Web API                       Done     
+Overview of .NET Core and its advantages                    Done     
+Understanding web APIs and RESTful principles               Done     
+Setting up the development environment                      Done     
+Creating your first .NET Core Web API project               Done     
 
 Session 2:- 
 ***********
-Routing and Controllers                                     Done
+Routing and Controllers                                     Done    
 Exploring attribute routing and action methods              Done
 Understanding HTTP verbs and their usage in controllers     Done
 Implementing asynchronous controller actions                Done
