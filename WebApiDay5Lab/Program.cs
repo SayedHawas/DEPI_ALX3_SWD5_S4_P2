@@ -1,5 +1,7 @@
 
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using WebApiDay5Lab.Data;
 
 namespace WebApiDay5Lab
@@ -8,11 +10,16 @@ namespace WebApiDay5Lab
     {
         public static void Main(string[] args)
         {
+            var myCors = "MyCors";
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            //builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            });
             //Add Context with Connection
             builder.Services.AddDbContext<AppDbContext>(option =>
             option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -22,6 +29,14 @@ namespace WebApiDay5Lab
             builder.Services.AddOpenApi();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddCors(options => options.AddPolicy(myCors, CorsPolicyBuilder =>
+            {
+                CorsPolicyBuilder
+                                .AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader();
+
+            }));
 
             var app = builder.Build();
 
@@ -36,7 +51,7 @@ namespace WebApiDay5Lab
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseCors(myCors);
 
             app.MapControllers();
 

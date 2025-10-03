@@ -40,6 +40,26 @@ namespace WebApiDay5Lab.Controllers
             return Ok(result);
         }
 
+
+        [HttpGet("EmployeeNames")]
+        public async Task<ActionResult<IEnumerable<GetDepartmentWithEmpNamesDto>>> GetDepartmentEmpNames()
+        {
+            var departments = await _context.Departments.Include("Employees").ToListAsync();
+            List<GetDepartmentWithEmpNamesDto> result = new List<GetDepartmentWithEmpNamesDto>();
+            foreach (var item in departments)
+            {
+                result.Add(new GetDepartmentWithEmpNamesDto()
+                {
+                    DepartmentId = item.DepartmentId,
+                    Name = item.Name,
+                    Description = item.Description,
+                    EmployeesCount = item.Employees.Count(),
+                    EmployeeNames = item.Employees.Select(e => e.Name).ToList()
+                });
+            }
+            return Ok(result);
+        }
+
         // GET: api/Departments
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetDepartmentDto>>> GetDepartments()
@@ -119,7 +139,7 @@ namespace WebApiDay5Lab.Controllers
         // POST: api/Departments
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PostDepartmentDto>> PostDepartment(PostDepartmentDto department)
+        public async Task<ActionResult<PostDepartmentDto>> PostDepartment([FromForm] PostDepartmentDto department)
         {
             if (!ModelState.IsValid) return BadRequest(department);
 
