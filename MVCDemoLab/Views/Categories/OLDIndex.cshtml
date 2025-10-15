@@ -1,0 +1,61 @@
+﻿@model List<Category>
+
+<h2> List Of Category </h2>
+<a href="#">Create</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    @foreach (Category item in Model)
+    {
+        <tr>
+            <td> @item.CategotyId</td>
+            <td> @item.Name</td>
+            <td> @item.Description</td>
+            <td>|<a href="#" class="btn btn-success">Details</a></td>
+            <td>|<a href="#" class="btn btn-primary">Edit</a></td>
+            <td>|<a href="#" class="btn btn-danger">Delete</a></td>
+        </tr>
+    
+    }
+</table>
+
+
+
+
+
+@*
+    comment
+*@
+<h1> Welcome in Category  </h1>
+
+<style>
+    h1 {
+    color: red;
+    }
+</style>
+
+
+<script>
+    alert("Welcome in View");
+</script>
+Email : Sout@@yahoo.com
+Email : Sout@yahoo.com
+Razor Syntax 
+@{
+    //Block Of code 
+    int x = 6;
+    x++;
+    int y = 100;
+
+    string email = "Email:Sout@yahoo.com";
+    <text> Sout@yahoo.com </text>
+
+}
+
+<h3> result is @x</h3>
+
+Expression
+<p> @(x + y) </p> 

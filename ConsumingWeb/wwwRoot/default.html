@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="jquery/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var uri = 'https://localhost:7107/api/departments';
+            //Ajax
+            $.getJSON(uri).done(function (data) {
+                //console.log(data);
+                $.each(data, function (key, item) {
+
+                    // Add a list item for the Employee.
+                    $('<li>', { text: formatItem(item) }).appendTo($('#Departments'));
+                });
+            });
+
+        });
+        function formatItem(item) {
+            return 'Name : ' + item.name + ': Description : ' + item.description;
+        }
+        function find() {
+            var uri = 'https://localhost:7107/api/departments';
+            var id = $('#departmentid').val();
+            console.log(id);
+            $.getJSON(uri + '/' + id)
+                .done(function (data) {
+                    console.log(data);
+                    $('#Department').text(formatItem(data));
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#Department').text('Error: ' + err);
+                });
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h2>All Department</h2>
+        <ul id="Departments" />
+    </div>
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="departmentid" size="5" />
+        <input type="button" value="Search" onclick="find();" />
+        <p id="Department" />
+    </div>
+
+
+
+</body>
+</html>

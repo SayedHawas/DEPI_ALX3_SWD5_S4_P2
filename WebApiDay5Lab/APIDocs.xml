@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebApiDay5Lab</name>
+    </assembly>
+    <members>
+        <member name="M:WebApiDay5Lab.Controllers.RepoDepartmentsController.#ctor(WebApiDay5Lab.Services.Interface.IServiceDepartment)">
+            <summary>
+            
+            </summary>
+            <param name="service"></param>
+        </member>
+        <member name="M:WebApiDay5Lab.Controllers.RepoDepartmentsController.GetDepartments">
+            <summary>
+             This EndPoint For Get List Of Departments
+            </summary>
+            <returns> List Of Departments</returns>
+            <example>
+             GET: api/Departments
+            </example>
+            <remarks>
+            Get Request :api/Departments
+            </remarks>
+            <response code="200">Returns the list of departments</response>
+            <response code="404">No departments found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:WebApiDay5Lab.Controllers.RepoDepartmentsController.GetDepartmentById(System.Int32)">
+            <summary>
+            Retrieves a specific department by ID
+            </summary>
+            <param name="id">The department ID</param>
+            <returns>Department details</returns>
+            <remarks>
+            Get Request :api/Departments/{id} Like 1
+            </remarks>
+            <response code="200">Returns the department</response>
+            <response code="404">Department not found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:WebApiDay5Lab.Controllers.RepoDepartmentsController.UpdateDepartment(System.Int32,WebApiDay5Lab.DTOs.DepartmentDtos.PutDepartmentDto)">
+            <summary>
+            Updates an existing department
+            </summary>
+            <param name="id">Department ID to update</param>
+            <param name="department">Updated department object</param>
+            <returns>Success message</returns>
+            <response code="200">Department updated successfully</response>
+            <response code="400">Invalid request data</response>
+            <response code="404">Department not found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:WebApiDay5Lab.Controllers.RepoDepartmentsController.CreateDepartment(WebApiDay5Lab.DTOs.DepartmentDtos.PostDepartmentDto)">
+             <summary>
+             Creates a new department
+             </summary>
+             <param name="department">Department object to create</param>
+             <returns>Created department</returns>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Department
+                 {
+                    "name": "IT Department",
+                    "description": "Information Technology"
+                 }
+            
+             </remarks>
+             <response code="201">Department created successfully</response>
+             <response code="400">Invalid request data</response>
+             <response code="500">Internal server error</response>
+        </member>
+        <member name="M:WebApiDay5Lab.Controllers.RepoDepartmentsController.DeleteDepartment(System.Int32)">
+            <summary>
+            Deletes a department
+            </summary>
+            <param name="id">Department ID to delete</param>
+            <returns>Success message</returns>
+            <response code="200">Department deleted successfully</response>
+            <response code="404">Department not found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:WebApiDay5Lab.Controllers.RepoDepartmentsController.GetWithPagination(System.Int32,System.Int32)">
+            <summary>
+            This EndPoint For Get List Of Departments With Pagination
+            </summary>
+            <param name="page"> Current Page Integer Number default 1</param>
+            <param name="pageSize"> Page size Of Row default 10</param>
+            <returns> List Of Department With Pagination</returns>
+        </member>
+        <member name="T:WebApiDay5Lab.Migrations.IntitalMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApiDay5Lab.Migrations.IntitalMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApiDay5Lab.Migrations.IntitalMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApiDay5Lab.Migrations.IntitalMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:WebApiDay5Lab.Migrations.AddDepartmentTable">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApiDay5Lab.Migrations.AddDepartmentTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApiDay5Lab.Migrations.AddDepartmentTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApiDay5Lab.Migrations.AddDepartmentTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:WebApiDay5Lab.Migrations.ModifyDepartmentAddData">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApiDay5Lab.Migrations.ModifyDepartmentAddData.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApiDay5Lab.Migrations.ModifyDepartmentAddData.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApiDay5Lab.Migrations.ModifyDepartmentAddData.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
