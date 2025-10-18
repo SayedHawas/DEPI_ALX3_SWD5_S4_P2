@@ -4,7 +4,11 @@
     {
         IRepository<Department> DepartmentRepository { get; }
         IRepository<Employee> EmployeeRepository { get; }
-        //IRepository<Orders> OrdersRepository { get; }
+        IRepository<Category> CategoriesRepository { get; }
+        IRepository<Product> ProductsRepository { get; }
+        IRepository<Customer> CustomersRepository { get; }
+        IRepository<Order> OrdersRepository { get; }
+        IRepository<OrderItem> OrderItemsRepository { get; }
         int Complete();
     }
 }

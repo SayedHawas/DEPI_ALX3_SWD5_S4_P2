@@ -1,42 +1,44 @@
-﻿@model IEnumerable<MVCDemoLab.Models.Category>
+﻿@model IList<MVCDemoLab.Models.Category>
+<h1> List Of Category</h1>
 
-@{
-    ViewData["Title"] = "Index";
-}
 
-<h1>List Of Categories</h1>
+<h2 style="color:red"> @ViewData["ApplicationName"]</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+<h2 style="color:red"> @((int)ViewData["N1"] + (int)ViewData["N2"])</h2>
+
+<h2 style="color:red"> @(ViewBag.Number1+ ViewBag.Number2)</h2>
+
+HTML
+<a href="/Categories/Create" class="btn btn-primary" > Create Category </a>
+<br />
+<br />
+HTML Helper
+@Html.ActionLink("Create Category", "Create", "Categories", null, htmlAttributes: new { @class = "btn btn-success" })
+
+<br />
+<br />
+Tag Helper
+<a asp-action="Create" asp-controller="Categories" class="btn btn-dark"> Create Category </a>
+<br />
+
+
+<table class="table" >
+    <tr>
+        <th>@Html.DisplayNameFor(model => model[0].CategotyId)</th>
+        <th>@Html.DisplayNameFor(model => model[0].Name)</th>
+        <th>@Html.DisplayNameFor(model => model[0].Description)</th>
+    </tr>
+@foreach (var item in Model)
+    {
+        
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
+            <td>@Html.DisplayFor(model=>item.CategotyId)</td>
+            <td>@Html.DisplayFor(model=>item.Name)</td>
+            <td>@Html.DisplayFor(model=>item.Description)</td>
+            <td> | <a asp-action="Edit" asp-route-id =@item.CategotyId/>Edit </td>
+            <td> | <a href="/Categories/Details/@item.CategotyId"> Details</td>
+            <td> | <a href="/Categories/Delete/@item.CategotyId"> Delete</td>
         </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                    <!--https://localhost:7213/Categories/Edit/1 -->
-                <a asp-action="Edit" asp-route-id="@item.CategotyId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CategotyId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CategotyId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+    }
+   
 </table>
