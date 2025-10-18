@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MVCDemoLab.Models
+namespace WebApiDay5Lab.Models
 {
+    [Table("TblCategories")]
     public class Category
     {
         [Key]
-        [DisplayName("Code")]
         public int CategotyId { get; set; }
-        [DisplayName("Category Name")]
         [Required(ErrorMessage = "Must Enter Name ....")]
         [MaxLength(150, ErrorMessage = "Must Enter Only 150 letters.")]
         public string Name { get; set; }
