@@ -33,7 +33,9 @@ namespace MVCDemoLab
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Site}/{action=Index}")
+                //pattern: "{controller=Users}/{action=Login}")
+                //pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
             app.Run();

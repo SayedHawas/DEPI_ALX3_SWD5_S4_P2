@@ -77,6 +77,34 @@ namespace MVCDemoLab.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("MVCDemoLab.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("TblUsers");
+                });
+
             modelBuilder.Entity("MVCDemoLab.Models.Product", b =>
                 {
                     b.HasOne("MVCDemoLab.Models.Category", "Category")
