@@ -30,6 +30,8 @@ namespace MVCDemoLab
 
             app.UseAuthorization();
 
+            //app.UseSession();
+
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
@@ -38,6 +40,51 @@ namespace MVCDemoLab
                 //pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
+            #region Custom MiddleWare
+            //Custom Middleware
+            //app.Use(async (HttpContext, next) =>
+            //{
+            //    //Execute  Request
+            //    await HttpContext.Response.WriteAsync("1) Execute From MiddleWare ... \n");
+            //    //Call Next 
+            //    await next.Invoke();
+
+            //    //Execute
+            //    await HttpContext.Response.WriteAsync("5) Return Execute From MiddleWare ... \n");
+            //});
+            //app.Use(async (HttpContext, next) =>
+            //{
+            //    //Execute  Request
+            //    await HttpContext.Response.WriteAsync("2) Execute From MiddleWare ... \n");
+            //    //Call Next 
+            //    await next.Invoke();
+
+            //    //Execute
+            //    await HttpContext.Response.WriteAsync("4) Return Execute From MiddleWare ... \n");
+            //});
+
+            //app.Map("/Home/Index", apiApp =>
+            //{
+
+            //    apiApp.Use(async (Context, next) =>
+            //    {
+            //        await Context.Response.WriteAsync("Home Controller Calling With Index Method ... \n");
+            //        await next();
+            //        //Execute
+            //        await Context.Response.WriteAsync("Finish Map Return Execute From MiddleWare ... \n");
+            //    });
+            //    apiApp.Run(async context =>
+            //    {
+            //        await context.Response.WriteAsync(" Execute From MAP MiddleWare ... \n");
+            //    });
+            //});
+
+            //app.Run(async (HttpContext) =>
+            //{
+            //    //Execute  Request
+            //    await HttpContext.Response.WriteAsync("3) Execute From MiddleWare ... \n");
+            //});
+            #endregion
             app.Run();
         }
     }

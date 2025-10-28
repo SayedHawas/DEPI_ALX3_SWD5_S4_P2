@@ -18,8 +18,24 @@ namespace MVCDemoLab.Controllers
         // GET: FullProducts
         public async Task<IActionResult> Index()
         {
+            //E:\#      0   DEPI\EDPI 2025 R3\Group 1 ALX3_SWD5_S4 Fr 2-5 Mon 7-10\#7 .Net Core MVC & WebAPI\Day 5\DEPI_ALX3_SWD5_S4_P2\MVCDemoLab\wwwroot\Images\Products\1.jpg
+            //Root\wwwroot\images\products\1.jpg
+
             var mVCDbContext = _context.Products.Include(p => p.Category);
-            return View(await mVCDbContext.ToListAsync());
+            List<Product> products = new List<Product>();
+            foreach (var item in mVCDbContext)
+            {
+                if (System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", item.ImagePath)))
+                {
+                    products.Add(item);
+                }
+                else
+                {
+                    item.ImagePath = "";
+                    products.Add(item);
+                }
+            }
+            return View(products.ToList());
         }
 
         // GET: FullProducts/Details/5
@@ -33,12 +49,41 @@ namespace MVCDemoLab.Controllers
             var product = await _context.Products
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
+
             if (product == null)
             {
                 return NotFound();
             }
 
+            if (!System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", product.ImagePath)))
+            {
+                product.ImagePath = "";
+            }
             return View(product);
+        }
+
+        public async Task<IActionResult> Card(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var product = await _context.Products.FirstOrDefaultAsync(m => m.ProductId == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            if (System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", product.ImagePath)))
+            {
+                return View(product);
+            }
+            else
+            {
+                product.ImagePath = "";
+                return View(product);
+            }
         }
 
         // GET: FullProducts/Create
@@ -54,8 +99,30 @@ namespace MVCDemoLab.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("ProductId,Name,Price,Description,ImagePath,CategotyId")] Product product)
-        public async Task<IActionResult> Create([ModelBinder(typeof(ProductModelBinder))] Product product)
+        public async Task<IActionResult> Create([ModelBinder(typeof(ProductModelBinder))] Product product, IFormFile photo)
         {
+            //if (product.CategotyId == 0)
+            //{
+            //    ModelState.AddModelError("CategotyId", "Must Select Category ...");
+            //    ViewData["CategotyId"] = new SelectList(_context.Categories, "CategotyId", "Name");
+            //    return View(product);
+            //}
+            //Link between Photo Image Path
+
+            string _Extenstion = Path.GetExtension(photo.FileName);  //.jpg
+            string _fileName = DateTime.Now.ToString("yyMMddhhssfff") + _Extenstion;
+
+            if (photo != null && photo.Length > 0)
+            {
+                //~
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", _fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await photo.CopyToAsync(stream);
+                }
+                product.ImagePath = _fileName; //photo.FileName;
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(product);
@@ -65,6 +132,12 @@ namespace MVCDemoLab.Controllers
             ViewData["CategotyId"] = new SelectList(_context.Categories, "CategotyId", "Name", product.CategotyId);
             return View(product);
         }
+
+        public async Task<IActionResult> Gallery()
+        {
+            return View(await _context.Products.ToListAsync());
+        }
+
 
         // GET: FullProducts/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -79,6 +152,11 @@ namespace MVCDemoLab.Controllers
             {
                 return NotFound();
             }
+            if (!System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", product.ImagePath)))
+            {
+                product.ImagePath = "";
+            }
+
             ViewData["CategotyId"] = new SelectList(_context.Categories, "CategotyId", "Name", product.CategotyId);
             return View(product);
         }
@@ -88,13 +166,27 @@ namespace MVCDemoLab.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,Name,Price,Description,ImagePath,CategotyId")] Product product)
+        public async Task<IActionResult> Edit(int id, Product product, IFormFile photo)
         {
             if (id != product.ProductId)
             {
                 return NotFound();
             }
 
+
+            if (photo != null && photo.Length > 0)
+            {
+                string _Extenstion = Path.GetExtension(photo.FileName);  //.jpg
+                string _fileName = DateTime.Now.ToString("yyMMddhhssfff") + _Extenstion;
+                //~
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", _fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await photo.CopyToAsync(stream);
+                }
+                product.ImagePath = _fileName; //photo.FileName;
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -134,8 +226,16 @@ namespace MVCDemoLab.Controllers
             {
                 return NotFound();
             }
-
-            return View(product);
+            if (System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", product.ImagePath)))
+            {
+                return View(product);
+            }
+            else
+            {
+                product.ImagePath = "";
+                return View(product);
+            }
+            //return View(product);
         }
 
         // POST: FullProducts/Delete/5

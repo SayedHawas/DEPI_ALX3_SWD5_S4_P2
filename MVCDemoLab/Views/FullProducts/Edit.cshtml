@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" asp-route-id="@Model.ProductId" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProductId" />
             <div class="form-group">
@@ -28,11 +28,14 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-           @*  <div class="form-group">
+            <div class="form-group">
                 <label asp-for="ImagePath" class="control-label"></label>
-                <input asp-for="ImagePath" class="form-control" />
+
+               @*  <input asp-for="ImagePath" class="form-control" /> *@
+                <img src="@Url.Content("~/images/products/" + (Model.ImagePath == "" ? "default.png" : Model.ImagePath))" class="card-img-top" alt="@Model.Name" />
+                <input type="file" class="form-control" id="Photo" name="Photo" />
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
-            </div> *@
+            </div>
             <div class="form-group">
                 <label asp-for="CategotyId" class="control-label"></label>
                 <select asp-for="CategotyId" class="form-control" asp-items="ViewBag.CategotyId"></select>
