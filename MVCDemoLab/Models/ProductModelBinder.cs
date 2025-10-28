@@ -15,6 +15,11 @@ namespace MVCDemoLab.Models
             string ImagePath = bindingContext.HttpContext.Request.Form["ImagePath"];
             string CategotyId = bindingContext.HttpContext.Request.Form["CategotyId"];
 
+            //Check the Categoty
+            if (int.Parse(CategotyId) == 0)
+            {
+                bindingContext.ModelState.AddModelError("CategotyId", "Must Select the Category");
+            }
             //create New Price 
             decimal newPrice = Convert.ToDecimal(Price) + 100m;
             int Id;

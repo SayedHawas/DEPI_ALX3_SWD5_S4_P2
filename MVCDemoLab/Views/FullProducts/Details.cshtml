@@ -28,12 +28,13 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-      @*   <dt class = "col-sm-2">
+         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ImagePath)
-        </dt> *@
-@*         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImagePath)
-        </dd> *@
+        </dt> 
+         <dd class = "col-sm-10">
+            @* @Html.DisplayFor(model => model.ImagePath) *@
+            <img src="@Url.Content("~/images/products/" + (Model.ImagePath == "" ? "default.png" : Model.ImagePath))" alt="@Model.Name" width="200" />
+        </dd> 
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Category)
         </dt>
