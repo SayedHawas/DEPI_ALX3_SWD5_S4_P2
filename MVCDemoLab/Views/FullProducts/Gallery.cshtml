@@ -1,30 +1,90 @@
-﻿@model IEnumerable<MVCDemoLab.Models.Product>
+﻿
+@model IEnumerable<MVCDemoLab.Models.Product>
 
 @{
     ViewData["Title"] = "Gallery";
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+    int totalItems = ViewBag.TotalItems;
+    int pageSize = ViewBag.PageSize;
 }
 
-<h2>Galley </h2>
+<h2>Gallery</h2>
+
 <div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var product in Model)
     {
         <div class="col">
             <div class="card h-100">
-                <!-- Display the product photo -->
                 <img src="@Url.Content("~/images/products/" + product.ImagePath)" class="card-img-top" alt="@product.Name" />
-
-                <!-- Display product details -->
                 <div class="card-body">
                     <h5 class="card-title">@product.Name</h5>
                     <p class="card-text">Price: $@product.Price</p>
                 </div>
-
-                <!-- Add a button to view details -->
                 <div class="card-footer">
                     <a asp-action="Details" asp-controller="FullProducts" asp-route-id="@product.ProductId" class="btn btn-primary">View Details</a>
-                    @* <a href="@Url.Action("Details", "FullProducts", new { id = product.ProductId })" class="btn btn-primary">View Details</a> *@
                 </div>
             </div>
         </div>
     }
 </div>
+
+<!-- Manual Pagination -->
+@if (totalPages > 1)
+{
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center mt-4">
+            <!-- Previous Page -->
+            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Gallery", new { page = currentPage - 1 })">Previous</a>
+            </li>
+
+            <!-- Page Numbers -->
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Gallery", new { page = i })">@i</a>
+                </li>
+            }
+
+            <!-- Next Page -->
+            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Gallery", new { page = currentPage + 1 })">Next</a>
+            </li>
+        </ul>
+    </nav>
+}
+
+<!-- Page Info -->
+<div class="text-center mt-2">
+    @{
+        int startItem = (currentPage - 1) * pageSize + 1;
+        int endItem = Math.Min(currentPage * pageSize, totalItems);
+    }
+    <p>Showing @startItem to @endItem of @totalItems products</p>
+</div>
+
+
+@section MyStyles
+{
+   <style>
+    .pagination {
+        margin: 20px 0;
+    }
+
+    .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .page-link {
+        color: #007bff;
+    }
+
+        .page-link:hover {
+            color: #0056b3;
+        }
+   </style>
+}
+
+
