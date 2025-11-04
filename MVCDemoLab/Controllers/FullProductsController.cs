@@ -133,9 +133,28 @@ namespace MVCDemoLab.Controllers
             return View(product);
         }
 
-        public async Task<IActionResult> Gallery()
+        //public async Task<IActionResult> Gallery()
+        //{
+        //    return View(await _context.Products.ToListAsync());
+        //}
+
+        public async Task<IActionResult> Gallery(int page = 1, int pageSize = 4)
         {
-            return View(await _context.Products.ToListAsync());
+            var totalItems = await _context.Products.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            var products = await _context.Products
+                .OrderBy(p => p.ProductId)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalItems = totalItems;
+
+            return View(products);
         }
 
 
