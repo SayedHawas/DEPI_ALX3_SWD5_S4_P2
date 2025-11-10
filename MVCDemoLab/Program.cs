@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using MVCDemoLab.Data;
+using MVCDemoLab.Services.Implement;
+using MVCDemoLab.UnitOfWorks.Implement;
 
 namespace MVCDemoLab
 {
@@ -11,9 +12,16 @@ namespace MVCDemoLab
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            //builder.Services.AddRazorPages().AddSessionStateTempDataProvider();
+            //builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider();
+            //builder.Services.AddSession();
 
             builder.Services.AddDbContext<MVCDbContext>(option =>
             option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IServiceCategory, ServiceCategory>();
 
             var app = builder.Build();
 
@@ -35,7 +43,7 @@ namespace MVCDemoLab
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Site}/{action=Index}")
+                pattern: "{controller=Site}/{action=Index}/{id?}")
                 //pattern: "{controller=Users}/{action=Login}")
                 //pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();

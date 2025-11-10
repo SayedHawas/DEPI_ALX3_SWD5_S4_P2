@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MVCDemoLab.Data;
-using MVCDemoLab.Models;
 
 namespace MVCDemoLab.Controllers
 {
     public class ProductsController : Controller
     {
+
         private readonly MVCDbContext _dbContext;
         public ProductsController(MVCDbContext dbContext)
         {
