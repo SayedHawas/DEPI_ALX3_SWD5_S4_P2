@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MVCDemoLab.Data;
-using MVCDemoLab.Models;
 
 namespace MVCDemoLab.Controllers
 {
     public class FullProductsController : Controller
     {
+        [TempData]
+        public string MessageAdd { get; set; }
+        [TempData]
+        public string MessageDelete { get; set; }
+
         private readonly MVCDbContext _context;
 
         public FullProductsController(MVCDbContext context)
@@ -127,6 +130,7 @@ namespace MVCDemoLab.Controllers
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
+                MessageAdd = $"Product {product.Name} added";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategotyId"] = new SelectList(_context.Categories, "CategotyId", "Name", product.CategotyId);
@@ -140,8 +144,26 @@ namespace MVCDemoLab.Controllers
 
         public async Task<IActionResult> Gallery(int page = 1, int pageSize = 4)
         {
-            var totalItems = await _context.Products.CountAsync();
-            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            #region As List 
+            //var list = _context.Products.ToList();
+            //var totalItems = await _context.Products.CountAsync();
+            //var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            //list = list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            //ViewBag.CurrentPage = page;
+            //ViewBag.TotalPages = totalPages;
+            //ViewBag.PageSize = pageSize;
+            //ViewBag.TotalItems = totalItems;
+            //return View(list); 
+            #endregion
+
+            var productCount = _context.Products.Count();
+            var totalCount = productCount;
+            var totalPage = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            // IEnumerable<Product>  Vs IQueryable<Product>
+            //    In Memory                in SQL 
+
+            //var products = (_context.Products as IQueryable<Product>).Skip((page - 1) * pageSize).Take(pageSize);
 
             var products = await _context.Products
                 .OrderBy(p => p.ProductId)
@@ -150,11 +172,12 @@ namespace MVCDemoLab.Controllers
                 .ToListAsync();
 
             ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = totalPages;
+            ViewBag.TotalPages = totalPage;
             ViewBag.PageSize = pageSize;
-            ViewBag.TotalItems = totalItems;
-
+            ViewBag.TotalItems = productCount;
             return View(products);
+
+
         }
 
 
@@ -266,6 +289,9 @@ namespace MVCDemoLab.Controllers
             if (product != null)
             {
                 _context.Products.Remove(product);
+                //MessageDelete = $"Department {product.Name} Delete ...";
+                TempData["MessageDelete"] = $"Product {product.Name} Delete ...";
+                //TempData.Keep();
             }
 
             await _context.SaveChangesAsync();
