@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-
 namespace MVCDemoLab.Models
 {
     [ModelMetadataType(typeof(ProductDataAnnotation))]
@@ -19,6 +18,8 @@ namespace MVCDemoLab.Models
         public string Name { get; set; }
         [Required(ErrorMessage = "Must Enter price ....")]
         [Range(0.00, 99999.00)]
+        //[CustomValidation(typeof(ValidatePriceAttribute), "ValidatePrice")]
+        [Remote("CheckPrice", "FullProducts", ErrorMessage = "Price Must Less than 19999")]
         public decimal Price { get; set; }
         [MaxLength(300, ErrorMessage = "Must Enter Only 300 letters.")]
         public string? Description { get; set; }

@@ -302,5 +302,14 @@ namespace MVCDemoLab.Controllers
         {
             return _context.Products.Any(e => e.ProductId == id);
         }
+        public IActionResult CheckPrice(decimal Price)
+        {
+            if (Price < 19999)
+            {
+                return Json(true);
+            }
+            return Json(false);
+
+        }
     }
 }
