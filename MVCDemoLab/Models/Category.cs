@@ -11,6 +11,7 @@ namespace MVCDemoLab.Models
         [DisplayName("Category Name")]
         [Required(ErrorMessage = "Must Enter Name ....")]
         [MaxLength(150, ErrorMessage = "Must Enter Only 150 letters.")]
+        [IsExist(MyErrorMessage = "This Category Already Exist ...")]
         public string Name { get; set; }
         [MaxLength(300, ErrorMessage = "Must Enter Only 300 letters.")]
         [DisplayName("Notes")]

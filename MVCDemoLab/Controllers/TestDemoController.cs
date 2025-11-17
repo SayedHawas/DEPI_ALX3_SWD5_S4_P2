@@ -14,5 +14,11 @@ namespace MVCDemoLab.Controllers
         {
             return x / y;
         }
+
+
+        public IActionResult ShowData()
+        {
+            return View();
+        }
     }
 }

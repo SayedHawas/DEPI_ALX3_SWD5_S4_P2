@@ -16,6 +16,7 @@ namespace MVCDemoLab.Controllers
         {
             this._service = service;
         }
+        [ResponseCache(Duration = 10)]
         // GET: FullCategories
         public async Task<IActionResult> Index()
         {

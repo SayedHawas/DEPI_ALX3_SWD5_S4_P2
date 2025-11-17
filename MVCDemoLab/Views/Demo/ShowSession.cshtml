@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "ShowSession";
+}
+
+<h1>ShowSession</h1>
+
+<div class="text-center">
+    <p>
+        <b>Name:</b> @Context.Session.GetString("name")
+        <b>Counter: </b> @Context.Session.GetInt32("Counter").ToString()
+    </p>
+</div>
